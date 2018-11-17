@@ -20,7 +20,7 @@ func (s *IntSet) Add(x int) {
 	for word >= len(s.words) {
 		s.words = append(s.words, 0)
 	}
-	s.words[word] = 1<<bit
+	s.words[word] = 1 << bit
 }
 
 func (s *IntSet) UnionWith(t *IntSet) {
@@ -42,13 +42,38 @@ func (s *IntSet) string() string {
 		}
 		for j := 0; j < 64; j++ {
 			if word&(1<<uint(j)) != 0 {
+				fmt.Println(word & (1 << uint(j)))
 				if buf.Len() > len("{") {
-					buf.WriteByte('}')
+					buf.WriteByte(' ')
 				}
+				fmt.Println("i=", i, " j=", j)
 				fmt.Fprintf(&buf, "%d", 64*i+j)
 			}
 		}
 	}
+	buf.WriteByte('}')
+	return buf.String()
+}
+
+func (s *IntSet) string1() string {
+	var buf bytes.Buffer
+	buf.WriteByte('{')
+	for i, word := range s.words {
+		if word == 0 {
+			continue
+		}
+
+		for j := 0; j < 64; j++ {
+			if word&(1<<uint(j)) != 0 {
+				if buf.Len() > len("{") {
+					buf.WriteByte(' ')
+				}
+
+				fmt.Fprintf(&buf, "%d", 64*i+j)
+			}
+		}
+	}
+
 	buf.WriteByte('}')
 	return buf.String()
 }
@@ -65,5 +90,6 @@ func main() {
 	s.UnionWith(&t)
 	fmt.Println(s)
 	p := IntSet{[]uint64{1, 9, 42, 144}}
-	fmt.Println(p.string() )
+	fmt.Println(p.string())
+	fmt.Println(p.string1())
 }
