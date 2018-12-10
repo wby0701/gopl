@@ -1,6 +1,7 @@
 package main
 
 import "fmt"
+
 type err struct {
 	key 	int
 	value 	string
@@ -18,4 +19,11 @@ func main() {
 	}
 
 	e.Error()
+	s := [...]string {
+		"aaa",
+		"bbb",
+		"ccc",
+	}
+	fmt.Println(len(s))
+	fmt.Println(s[1])
 }

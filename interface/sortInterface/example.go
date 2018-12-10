@@ -8,6 +8,7 @@ import (
 	"time"
 )
 
+var a uintptr
 type Track struct {
 	Title 	string
 	Artist 	string
